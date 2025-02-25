@@ -1,0 +1,67 @@
+/* Reset some default margins and paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Basic body styles */
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    scroll-behavior: smooth; /* This enables smooth scrolling */
+  }
+  
+  /* Navigation bar styles */
+  header {
+    position: fixed;         /* Keep the nav fixed on top */
+    top: 0;
+    width: 100%;
+    background-color: #333;  /* Dark background for nav */
+  }
+  
+  nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+  }
+  
+  nav li {
+    margin: 0 15px;
+  }
+  
+  nav a {
+    color: #fff;             /* White text */
+    text-decoration: none;
+    font-weight: bold;
+    padding: 15px 0;
+    display: block;
+  }
+  
+  nav a:hover {
+    color: #ddd;             /* Slightly lighter on hover */
+  }
+  
+  /* Main sections spacing */
+  main {
+    margin-top: 60px; /* Add top margin so content is not hidden under fixed nav */
+  }
+  
+  section {
+    padding: 60px 20px;
+    min-height: 80vh;  /* Just to give some scrolling space */
+    border-bottom: 1px solid #ccc;
+  }
+  
+  section h1 {
+    margin-bottom: 20px;
+  }
+  
+  footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+    position: relative;
+  }
+  
