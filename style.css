@@ -8,12 +8,22 @@
   }
   
   html, body {
-    background: #1e1e1e; /* VSCode-like dark background */
-    color: #d4d4d4;      /* VSCode-like font color */
+    color: #333; /* Adjust text color for readability */
     font-family: 'Fira Code', Consolas, monospace;
-    height: 100%;
     overflow-x: hidden;
     scroll-behavior: smooth;
+  }
+
+  html {
+    height: 100%; /* ✅ Ensures the gradient covers the entire page */
+    background: linear-gradient(to bottom, #1e1e1e, white);
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* ✅ Keeps the gradient consistent while scrolling */
+    background-size: cover;
+  }
+
+  body {
+    min-height: 100vh; /* ✅ Ensures at least the viewport height */
   }
   
   /* ===========================
@@ -32,7 +42,7 @@
     display: flex;
     flex-direction: column;
     padding: 10px;
-    border: 2px solid #4ec9b0; /* outlined */
+    border: 2px solid #a9a9a9; /* outlined */
   }
   .sidebar.show {
     transform: translateX(0);
@@ -48,11 +58,11 @@
     gap: 8px;
   }
   .file-item {
-    color: #9cdcfe;
+    color: #ecc39e;
     cursor: pointer;
     padding: 4px 6px;
     transition: background 0.2s;
-    border: 1px solid #4ec9b0;
+    border: 1px solid #a9a9a9;
     border-radius: 4px;
   }
   .file-item:hover {
@@ -239,11 +249,11 @@
   /* DISTINCT OUTLINE FOR NAV KEYS */
   .key.nav {
     background: #464646;
-    border-color: #4ec9b0;
+    border-color: #c65fb6;
   }
   .key.nav:hover {
-    background: #505050;
-    border-color: #4ec9b0;
+    background: #cf4ab5;
+    border-color: #ffffff;
   }
   .key.nav:active {
     background: #777;
@@ -256,6 +266,7 @@
   /* PAGE SECTIONS */
   main {
     margin-top: 40px;
+    min-height: 100vh;
   }
   .page-section {
     min-height: 100vh;

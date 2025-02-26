@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ----- TYPING LOGIC + BLINKING CURSOR ----- */
     /* ----- TYPING LOGIC + BLINKING CURSOR ----- */
     const screenContent = document.querySelector('.screen-content');
-    const titleText = "Scripts & Commits to Roadmaps that Fit: Hannah's Journey From Code to Product";
+    const titleText = "Scripts & Commits to Roadmaps that Fit: Hannah's Journey From &lt;Code&gt to Product";
     let index = 0;
     let hasStartedTyping = false;
     let typedMessage = '';
@@ -81,6 +81,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* KEY CLICK => TYPING LOGIC */
     document.querySelectorAll('.key').forEach(keyEl => {
+        /* ----- ENSURE NAVIGATION KEYS SCROLL TO SECTIONS ----- */
+        document.querySelectorAll('.key.nav').forEach(keyEl => {
+            keyEl.addEventListener('click', () => {
+                const targetId = keyEl.getAttribute('data-target');
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' }); // ✅ Smooth scroll to section
+                }
+                return;
+            });
+        });
         keyEl.addEventListener('click', () => {
             const keyText = keyEl.textContent.trim();
 
@@ -118,3 +129,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+document.body.style.background = "linear-gradient(to bottom, #1e1e1e, white)";
