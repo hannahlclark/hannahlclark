@@ -45,96 +45,76 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     }
-  
-    /* ----- KEYBOARD FLASH ANIMATION (TWICE) ON PAGE LOAD ----- */
-    const allKeys = document.querySelectorAll('.key');
-    allKeys.forEach(k => k.classList.add('flash'));
-    setTimeout(() => {
-      allKeys.forEach(k => k.classList.remove('flash'));
-    }, 2000);
-  
-    /* ----- REPLICATE LARGER MOUSE INSIDE MONITOR ----- */
-    const monitorScreen = document.querySelector('.computer-screen');
-    const customCursor = document.createElement('div');
-    customCursor.classList.add('custom-cursor');
-    monitorScreen.appendChild(customCursor);
-  
-    monitorScreen.addEventListener('mousemove', (e) => {
-      const rect = monitorScreen.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      customCursor.style.display = 'block';
-      customCursor.style.left = x + 'px';
-      customCursor.style.top = y + 'px';
-    });
-  
-    monitorScreen.addEventListener('mouseleave', () => {
-      customCursor.style.display = 'none';
+
+    /* ----- ADD KEYBOARD HOVER EFFECT ----- */
+    document.querySelectorAll('.key').forEach(keyEl => {
+        keyEl.addEventListener('mouseover', () => {
+            keyEl.classList.add('key-hover');
+        });
+        keyEl.addEventListener('mouseleave', () => {
+            keyEl.classList.remove('key-hover');
+        });
     });
   
     /* ----- TYPING LOGIC + BLINKING CURSOR ----- */
+    /* ----- TYPING LOGIC + BLINKING CURSOR ----- */
     const screenContent = document.querySelector('.screen-content');
-    const punTitle = `
-      <div class="pun-title">
-        Scrips & Commits to Roadmaps that Fit: Hannah's Journey From Code to Product<span class="blink-cursor"></span>
-      </div>
-    `;
-    
-    function typedHTML(msg) {
-      return `${msg}<span class="blink-cursor"></span>`;
-    }
-    
-    screenContent.innerHTML = punTitle;
-  
-    let typedMessage = '';
+    const titleText = "Scripts & Commits to Roadmaps that Fit: Hannah's Journey From Code to Product";
+    let index = 0;
     let hasStartedTyping = false;
-  
+    let typedMessage = '';
+
+    function typeTitle() {
+        if (index < titleText.length) {
+            let typedText = titleText.substring(0, index + 1);
+            let formattedText = typedText + '<span class="blink-cursor"></span>';
+            screenContent.innerHTML = `<span class="pun-title">${formattedText}</span>`;
+            index++;
+            setTimeout(typeTitle, 50); // Adjust speed here
+        } else {
+            screenContent.innerHTML = `<span class="pun-title">${titleText}<span class="blink-cursor"></span></span>`;
+        }
+    }
+
+    // Start typing animation
+    typeTitle();
+
     /* KEY CLICK => TYPING LOGIC */
     document.querySelectorAll('.key').forEach(keyEl => {
-      keyEl.addEventListener('click', () => {
-        // If nav key => jump to section
-        if (keyEl.classList.contains('nav')) {
-          const targetId = keyEl.getAttribute('data-target');
-          const targetSection = document.getElementById(targetId);
-          if (targetSection) {
-            targetSection.scrollIntoView({ behavior: 'smooth' });
-          }
-          return;
-        }
-  
-        // Otherwise typed key
-        const keyText = keyEl.textContent.trim();
-  
-        // If not started typing yet, clear the punTitle from the screen
-        if (!hasStartedTyping) {
-          typedMessage = '';
-          screenContent.innerHTML = '';
-          hasStartedTyping = true;
-        }
-  
-        // Check special keys
-        if (/^Backspace$/i.test(keyText)) {
-          typedMessage = typedMessage.slice(0, -1);
-        } else if (/^Enter$/i.test(keyText)) {
-          typedMessage += '\n';
-        } else if (/^Space$/i.test(keyText)) {
-          typedMessage += ' ';
-        } else {
-          typedMessage += keyText;
-        }
-  
-        // Trim leftover whitespace
-        if (!typedMessage.trim()) {
-          typedMessage = '';
-        }
-  
-        // If typed is empty => restore punTitle
-        if (typedMessage.length === 0) {
-          hasStartedTyping = false;
-          screenContent.innerHTML = punTitle;
-        } else {
-          screenContent.innerHTML = typedHTML(typedMessage);
-        }
-      });
+        keyEl.addEventListener('click', () => {
+            const keyText = keyEl.textContent.trim();
+
+            // If not started typing yet, clear the title from the screen
+            if (!hasStartedTyping) {
+                typedMessage = '';
+                screenContent.innerHTML = '';
+                hasStartedTyping = true;
+            }
+
+            // Handle special keys
+            if (/^Backspace$/i.test(keyText)) {
+                typedMessage = typedMessage.slice(0, -1);
+            } else if (/^Enter$/i.test(keyText)) {
+                typedMessage += '\n';
+            } else if (/^Space$/i.test(keyText)) {
+                typedMessage += ' ';
+            } else {
+                typedMessage += keyText;
+            }
+
+            // Trim whitespace
+            if (!typedMessage.trim()) {
+                typedMessage = '';
+            }
+
+            // If typed is empty => restore final typed title correctly
+            if (typedMessage.length === 0) {
+                hasStartedTyping = false;
+                screenContent.innerHTML = `<span class="pun-title">${titleText}<span class="blink-cursor"></span></span>`;
+                index = titleText.length; // Reset index to prevent retyping animation
+            } else {
+                screenContent.innerHTML = `<span class="pun-title">${typedMessage}<span class="blink-cursor"></span></span>`;
+            }
+        });
     });
-  });
+});

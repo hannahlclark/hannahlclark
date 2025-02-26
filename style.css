@@ -119,20 +119,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    /* Hide native cursor so we can replace with a bigger arrow */
-    cursor: none;
-  }
-  
-  /* We'll replicate an arrow pointer with a bigger arrow. */
-  .custom-cursor {
-    position: absolute;
-    pointer-events: none;
-    width: 40px;
-    height: 40px;
-    background: url("data:image/svg+xml;base64,...") no-repeat center;
-    background-size: cover;
-    transform: translate(-50%, -50%);
-    display: none; /* shown on mousemove */
+    cursor: default;
   }
   
   .monitor-stand {
@@ -156,6 +143,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    white-space: pre-wrap;  /* ✅ Allows text to wrap properly */
   }
   
   /* BLINKING CURSOR after pun title */
@@ -243,6 +231,10 @@
     box-shadow: inset 0 -2px 0 #2a2a2a, 0 3px 0 rgba(0,0,0,0.4);
     cursor: pointer;
   }
+  .key-hover {
+    background: #666; /* or any color you prefer */
+    transition: background 0.2s ease-in-out;
+  }
   
   /* DISTINCT OUTLINE FOR NAV KEYS */
   .key.nav {
@@ -260,19 +252,6 @@
   }
   .wide { min-width: 80px; }
   .extra-wide { min-width: 140px; }
-  
-  /* Flash animation for keys (blink twice on page load) */
-  @keyframes flash-keys {
-    0%, 100% {
-      filter: brightness(1);
-    }
-    25%, 75% {
-      filter: brightness(2);
-    }
-  }
-  .flash {
-    animation: flash-keys 1s ease 2;
-  }
   
   /* PAGE SECTIONS */
   main {
