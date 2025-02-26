@@ -1,67 +1,360 @@
-/* Reset some default margins and paddings */
-* {
+/* ============================
+   GLOBAL & DARK THEME SETUP
+   ============================ */
+   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
   
-  /* Basic body styles */
-  body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    scroll-behavior: smooth; /* This enables smooth scrolling */
+  html, body {
+    background: #1e1e1e; /* VSCode-like dark background */
+    color: #d4d4d4;      /* VSCode-like font color */
+    font-family: 'Fira Code', Consolas, monospace;
+    height: 100%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
   }
   
-  /* Navigation bar styles */
-  header {
-    position: fixed;         /* Keep the nav fixed on top */
+  /* ===========================
+     SIDEBAR (File Explorer)
+     =========================== */
+  .sidebar {
+    position: fixed;
     top: 0;
-    width: 100%;
-    background-color: #333;  /* Dark background for nav */
+    left: 0;
+    width: 220px;
+    height: 100%;
+    background: #252526;
+    transform: translateX(-220px);
+    transition: transform 0.3s ease;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border: 2px solid #4ec9b0; /* outlined */
+  }
+  .sidebar.show {
+    transform: translateX(0);
+  }
+  .sidebar h3 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  .file-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .file-item {
+    color: #9cdcfe;
+    cursor: pointer;
+    padding: 4px 6px;
+    transition: background 0.2s;
+    border: 1px solid #4ec9b0;
+    border-radius: 4px;
+  }
+  .file-item:hover {
+    background: #3a3d41;
+  }
+  .file-item:active {
+    background: #264f78;
+  }
+  .sidebar-close {
+    align-self: flex-end;
+    background: transparent;
+    border: none;
+    color: #999;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  .sidebar-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: #333;
+    color: #d4d4d4;
+    border: none;
+    padding: 8px 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    z-index: 10000;
+    transition: opacity 0.3s;
   }
   
-  nav ul {
-    list-style: none;
+  /* ===========================
+     TITLE PAGE + FULL KEYBOARD
+     =========================== */
+  .title-page {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    text-align: center;
+    position: relative;
+    padding: 40px 20px 0;
+  }
+  
+  .monitor-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  
+  /* COMPUTER SCREEN: more 3D, realistic look */
+  .computer-screen {
+    width: 800px;
+    height: 220px;
+    background: linear-gradient(160deg, #1c1c1c, #2a2a2a);
+    border: 10px solid #333;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    /* Hide native cursor so we can replace with a bigger arrow */
+    cursor: none;
+  }
+  
+  /* We'll replicate an arrow pointer with a bigger arrow. */
+  .custom-cursor {
+    position: absolute;
+    pointer-events: none;
+    width: 40px;
+    height: 40px;
+    background: url("data:image/svg+xml;base64,...") no-repeat center;
+    background-size: cover;
+    transform: translate(-50%, -50%);
+    display: none; /* shown on mousemove */
+  }
+  
+  .monitor-stand {
+    width: 120px;
+    height: 20px;
+    background: #333;
+    border-radius: 4px 4px 0 0;
+    margin-top: -2px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  }
+  
+  .screen-content {
+    text-align: center;
+    padding: 20px;
+    color: #d4d4d4;
+    font-size: 1.2rem;
+    min-height: 100px; /* ✅ Ensure this prevents collapsing */
+    width: 90%; /* ✅ Keeps text from affecting width */
+    overflow: hidden; /* ✅ Prevents resizing on large text */
+    word-wrap: break-word;
+    display: flex;
+    align-items: center;
     justify-content: center;
   }
   
-  nav li {
-    margin: 0 15px;
+  /* BLINKING CURSOR after pun title */
+  .pun-title {
+    font-size: 1.8rem;
+    max-width: 700px;
+    line-height: 1.4;
+    margin-bottom: 10px;
+    position: relative;
   }
   
-  nav a {
-    color: #fff;             /* White text */
+  .blink-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em; /* Ensure it matches text height */
+    background: #ffffff; /* Ensure it's white and visible */
+    margin-left: 0px; /* Small spacing from text */
+    vertical-align: middle; /* Align properly with text */
+    animation: blink-cursor 1s infinite step-end alternate;
+  }
+  
+  @keyframes blink-cursor {
+    0%   { opacity: 1; }
+    50%  { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  /* Social icons below the pun title, with color + highlight white on hover. */
+  .social-icons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+  }
+  .icon-link {
     text-decoration: none;
-    font-weight: bold;
-    padding: 15px 0;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  /* Default icon color tint (slightly tinted) */
+  .icon-link img {
+    width: 24px;
+    height: 24px;
     display: block;
+    filter: hue-rotate(220deg) saturate(2) brightness(1.2);
+    transition: transform 0.3s, filter 0.3s;
+  }
+  /* On hover: enlarge slightly and shift to white */
+  .icon-link:hover img {
+    transform: scale(1.1);
+    filter: brightness(5) saturate(1);
   }
   
-  nav a:hover {
-    color: #ddd;             /* Slightly lighter on hover */
+  .keyboard-zone {
+    width: 900px;
+    overflow: hidden;
+    margin: 0 auto;
+    position: relative;
+  }
+  .keyboard {
+    background: #2d2d2d;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    width: 900px;
+    transform-origin: top center;
+  }
+  .keyboard-row {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 8px;
+    justify-content: center;
+  }
+  .key {
+    background: #3c3c3c;
+    color: #d4d4d4;
+    border-radius: 6px;
+    padding: 15px;
+    min-width: 50px;
+    text-align: center;
+    font-size: 1rem;
+    transition: background 0.2s, transform 0.1s;
+    border: 2px solid #2f2f2f;
+    box-shadow: inset 0 -2px 0 #2a2a2a, 0 3px 0 rgba(0,0,0,0.4);
+    cursor: pointer;
   }
   
-  /* Main sections spacing */
+  /* DISTINCT OUTLINE FOR NAV KEYS */
+  .key.nav {
+    background: #464646;
+    border-color: #4ec9b0;
+  }
+  .key.nav:hover {
+    background: #505050;
+    border-color: #4ec9b0;
+  }
+  .key.nav:active {
+    background: #777;
+    transform: translateY(2px);
+    box-shadow: inset 0 -2px 0 #666, 0 2px 0 rgba(0,0,0,0.3);
+  }
+  .wide { min-width: 80px; }
+  .extra-wide { min-width: 140px; }
+  
+  /* Flash animation for keys (blink twice on page load) */
+  @keyframes flash-keys {
+    0%, 100% {
+      filter: brightness(1);
+    }
+    25%, 75% {
+      filter: brightness(2);
+    }
+  }
+  .flash {
+    animation: flash-keys 1s ease 2;
+  }
+  
+  /* PAGE SECTIONS */
   main {
-    margin-top: 60px; /* Add top margin so content is not hidden under fixed nav */
+    margin-top: 40px;
   }
-  
-  section {
+  .page-section {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
     padding: 60px 20px;
-    min-height: 80vh;  /* Just to give some scrolling space */
-    border-bottom: 1px solid #ccc;
   }
-  
-  section h1 {
+  .section-content {
+    max-width: 800px;
+    background: #252526;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    padding: 40px;
+    color: #d4d4d4;
+  }
+  .section-content.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .section-content h2 {
     margin-bottom: 20px;
+    font-size: 2rem;
+    color: #4ec9b0;
+  }
+  .section-content p {
+    line-height: 1.6;
+    font-size: 1rem;
   }
   
+  /* FOOTER */
   footer {
     text-align: center;
     padding: 20px;
-    background-color: #f4f4f4;
-    position: relative;
+    background-color: #252526;
+    color: #d4d4d4;
+  }
+  
+  /* MEDIA QUERIES */
+  @media (max-width: 768px) {
+    .sidebar-toggle {
+      left: 20px;
+    }
+    .computer-screen {
+      width: 90%;
+      height: 180px;
+    }
+    .monitor-stand {
+      width: 80px;
+    }
+    .pun-title {
+      font-size: 1.4rem;
+    }
+    .keyboard-zone {
+      width: 100%;
+    }
+    .keyboard {
+      width: 100%;
+      padding: 10px;
+    }
+    .key {
+      min-width: 40px;
+      padding: 10px;
+      font-size: 0.9rem;
+    }
+    .custom-cursor {
+      width: 30px;
+      height: 30px;
+    }
+    .icon-link img {
+      width: 20px;
+      height: 20px;
+    }
   }
   

@@ -3,70 +3,181 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Personal Website</title>
-  <!-- Link to external CSS file -->
+  <title>Full Keyboard with VSCode Vibes</title>
+
+  <!-- Link to external CSS -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Navigation / Heading Pane -->
-  <header>
-    <nav>
-      <ul>
-        <li><a href="#welcome">Welcome</a></li>
-        <li><a href="#about-me">About Me</a></li>
-        <li><a href="#resume">Resume</a></li>
-        <li><a href="#projects">Projects</a></li>
-      </ul>
-    </nav>
-  </header>
+  <!-- SIDEBAR / FILE EXPLORER -->
+  <button class="sidebar-toggle">Files</button>
+  <div class="sidebar">
+    <h3>EXPLORER</h3>
+    <div class="file-list">
+      <div class="file-item" data-target="intro">intro.txt</div>
+      <div class="file-item" data-target="about">about.html</div>
+      <div class="file-item" data-target="projects">projects.css</div>
+      <div class="file-item" data-target="another">random.txt</div>
+    </div>
+  </div>
 
-  <!-- Main Content Container -->
+  <!-- TITLE PAGE WITH FULL KEYBOARD -->
+  <div class="title-page">
+    <div class="monitor-wrapper">
+      <div class="computer-screen">
+        <div class="screen-content">
+          <!-- Filled dynamically by JS -->
+        </div>
+        <div class="custom-cursor"></div>
+      </div>
+      <div class="monitor-stand"></div>
+    </div>
+
+    <div class="keyboard-zone">
+      <div class="keyboard">
+        <!-- ROW 1 (Function keys, ESC) -->
+        <div class="keyboard-row">
+          <div class="key">Esc</div>
+          <div class="key">F1</div>
+          <div class="key">F2</div>
+          <div class="key">F3</div>
+          <div class="key">F4</div>
+          <div class="key">F5</div>
+          <div class="key">F6</div>
+          <div class="key">F7</div>
+          <div class="key">F8</div>
+          <div class="key">F9</div>
+          <div class="key">F10</div>
+          <div class="key">F11</div>
+          <div class="key">F12</div>
+        </div>
+        <!-- ROW 2 (Numbers) -->
+        <div class="keyboard-row">
+          <div class="key nav" data-target="intro">Intro</div>
+          <div class="key">1</div>
+          <div class="key">2</div>
+          <div class="key">3</div>
+          <div class="key">4</div>
+          <div class="key">5</div>
+          <div class="key">6</div>
+          <div class="key">7</div>
+          <div class="key">8</div>
+          <div class="key">9</div>
+          <div class="key">0</div>
+          <div class="key">-</div>
+          <div class="key">=</div>
+          <div class="key wide">Backspace</div>
+        </div>
+        <!-- ROW 3 (QWERTY) -->
+        <div class="keyboard-row">
+          <div class="key wide">Tab</div>
+          <div class="key">Q</div>
+          <div class="key">W</div>
+          <div class="key">E</div>
+          <div class="key nav" data-target="about">About</div>
+          <div class="key">T</div>
+          <div class="key">Y</div>
+          <div class="key">U</div>
+          <div class="key">I</div>
+          <div class="key nav" data-target="projects">Projects</div>
+          <div class="key">P</div>
+          <div class="key">[</div>
+          <div class="key">]</div>
+          <div class="key">\\</div>
+        </div>
+        <!-- ROW 4 (ASDF) -->
+        <div class="keyboard-row">
+          <div class="key wide">Caps</div>
+          <div class="key">A</div>
+          <div class="key">S</div>
+          <div class="key">D</div>
+          <div class="key">F</div>
+          <div class="key">G</div>
+          <div class="key">H</div>
+          <div class="key">J</div>
+          <div class="key">K</div>
+          <div class="key">L</div>
+          <div class="key">;</div>
+          <div class="key">'</div>
+          <div class="key wide">Enter</div>
+        </div>
+        <!-- ROW 5 (ZXCV) -->
+        <div class="keyboard-row">
+          <div class="key wide">Shift</div>
+          <div class="key">Z</div>
+          <div class="key">X</div>
+          <div class="key nav" data-target="another">Random</div>
+          <div class="key">V</div>
+          <div class="key">B</div>
+          <div class="key">N</div>
+          <div class="key">M</div>
+          <div class="key">,</div>
+          <div class="key">.</div>
+          <div class="key">/</div>
+          <div class="key wide">Shift</div>
+        </div>
+        <!-- ROW 6 (Ctrl/Alt) -->
+        <div class="keyboard-row">
+          <div class="key">Ctrl</div>
+          <div class="key">Win</div>
+          <div class="key">Alt</div>
+          <div class="key extra-wide">Space</div>
+          <div class="key">Alt</div>
+          <div class="key">Fn</div>
+          <div class="key">Menu</div>
+          <div class="key">Ctrl</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN SECTIONS -->
   <main>
-    <!-- Welcome Section -->
-    <section id="welcome">
-      <h1>Welcome</h1>
-      <p>
-        Hello! This is my personal website hosted on GitHub Pages. 
-        Feel free to scroll through or click the navigation links 
-        to jump to different sections.
-      </p>
+    <section id="intro" class="page-section">
+      <div class="section-content">
+        <h2>Intro</h2>
+        <p>
+          Welcome to my site, where code meets creativity.
+          We have a full keyboard up top, plus an Explorer panel on the left.
+        </p>
+      </div>
     </section>
 
-    <!-- About Me Section -->
-    <section id="about-me">
-      <h1>About Me</h1>
-      <p>
-        Write a brief introduction about yourself here. You could 
-        mention your background, interests, or what you are currently 
-        working on.
-      </p>
+    <section id="about" class="page-section">
+      <div class="section-content">
+        <h2>About</h2>
+        <p>
+          I'm passionate about bringing product visions to life with code.
+          From user stories to final release, I keep a keen eye on detail.
+        </p>
+      </div>
     </section>
 
-    <!-- Resume Section -->
-    <section id="resume">
-      <h1>Resume</h1>
-      <p>
-        This is where you can outline your professional experience, 
-        education, and skills. You can also link a PDF version of 
-        your resume for visitors to download.
-      </p>
+    <section id="projects" class="page-section">
+      <div class="section-content">
+        <h2>Projects</h2>
+        <p>
+          Dive into a few of my favorite side projects, experiments, and professional work.
+        </p>
+      </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects">
-      <h1>Projects</h1>
-      <p>
-        Showcase your favorite or most impressive projects here. 
-        Include links, screenshots, or short demos if possible.
-      </p>
+    <section id="another" class="page-section">
+      <div class="section-content">
+        <h2>Random Section</h2>
+        <p>
+          A placeholder for random ideas, notes, or anything else you want to add.
+        </p>
+      </div>
     </section>
   </main>
 
-  <!-- Footer (Optional) -->
   <footer>
     <p>&copy; 2025 My Name. All Rights Reserved.</p>
   </footer>
 
+  <!-- Link to external JavaScript just before closing body tag -->
+  <script src="script.js"></script>
 </body>
 </html>
