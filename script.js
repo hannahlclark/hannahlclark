@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const screenContent = document.querySelector('.screen-content');
     const punTitle = `
       <div class="pun-title">
-        Scrips & Commits to Roadmaps that Fit: Hananh's Journey From Code to Product<span class="blink-cursor"></span>
+        Scrips & Commits to Roadmaps that Fit: Hannah's Journey From Code to Product<span class="blink-cursor"></span>
       </div>
     `;
     
